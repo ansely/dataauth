@@ -33,6 +33,7 @@
       <groupId>com.github.jsqlparser</groupId>
       <artifactId>jsqlparser</artifactId>
       <version>${jsqlparser.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -50,6 +51,13 @@
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjweaver</artifactId>
       <version>${aspectj.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
   <build>
@@ -81,4 +89,7 @@
       </plugin>
     </plugins>
   </build>
+  <distributionManagement>
+
+  </distributionManagement>
 </project>

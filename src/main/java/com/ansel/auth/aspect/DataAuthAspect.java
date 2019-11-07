@@ -6,6 +6,7 @@ import com.ansel.auth.core.DataAuthException;
 import com.ansel.auth.core.DataAuthManager;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -37,6 +38,12 @@ public class DataAuthAspect {
     Map<String,List<String>> mapAuth = dataAuthService.authDatas();
     if(CollectionUtils.isEmpty(mapAuth)){
       throw new DataAuthException("mapAuth must not null.");
+    }
+    if(CollectionUtils.isEmpty(mapAuth.values())){
+      throw new DataAuthException("用户没有任何数据权限.");
+    }
+    if(CollectionUtils.isEmpty(mapAuth.values().stream().filter(s->!CollectionUtils.isEmpty(s)).collect(Collectors.toList()))){
+      throw new DataAuthException("用户没有任何数据权限.");
     }
     DataAuthManager.set(mapAuth);
     return pjp.proceed();

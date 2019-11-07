@@ -8,6 +8,7 @@ import com.ansel.auth.core.DataAuthManager;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.StringValue;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
@@ -26,6 +27,7 @@ import org.springframework.util.CollectionUtils;
  * @Date: 2019/10/15
  * @Description: 数据权限sql增强
  */
+@Slf4j
 public class SelectVistorImpl implements SelectVisitor {
 
   //是否处理sql标识
@@ -52,9 +54,9 @@ public class SelectVistorImpl implements SelectVisitor {
     if (plainSelect.getWhere() != null) {
       whereExpression = plainSelect.getWhere();
     }
-   // log.info("Data auth interceptor start..");
+    log.debug("Data auth interceptor start..");
     for (Table table : fromVistor.getTables()) {
-     // log.info("Data auth interceptor...table:{}", table.getFullyQualifiedName());
+      log.debug("Data auth interceptor...table:{}", table.getFullyQualifiedName());
 
       if (CollectionUtils.isEmpty(mapDatas)) {
         throw new DataAuthException(
@@ -78,7 +80,7 @@ public class SelectVistorImpl implements SelectVisitor {
       whereExpression = and;
     }
     plainSelect.setWhere(whereExpression);
-    //log.info("Data auth interceptor end. sql:{}", plainSelect.toString());
+    log.debug("Data auth interceptor end. sql:{}", plainSelect.toString());
   }
 
   @Override
